@@ -7,13 +7,17 @@ Created on Mon Sep 27 18:29:13 2021
 import torch
 import torch.nn as nn
 import components as c
+import parameters
 
 class UnetGenerator(nn.Module):
-    def __init__(self, in_dim, out_dim, n_filter):
-
-        self.in_dim = in_dim
-        self.out_dim = out_dim
-        self.n_filter = n_filter
+    def __init__(self):
+        
+        super(UnetGenerator, self).__init__()
+        params = parameters.params()
+                
+        self.in_dim = params['in_dim']
+        self.out_dim = params['out_dim']
+        self.n_filter = params['n_filter']
         
         act_fn = nn.LeakyReLU(0.2, inplace=True)
 

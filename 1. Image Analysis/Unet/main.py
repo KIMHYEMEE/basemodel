@@ -21,15 +21,12 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 
 img_size = 256
-in_dim = 1
-out_dim = 1
-n_filter = 64
 n_epoch = 3000
 lr = 0.001
 batch_size = 30
 n_epoch = 100
 
-data_dir = 'C:/BaseData/Project/5. DBR/202109_data/original'
+data_dir = 'C:/BaseData/Project/5. DBR/202109_data/original/OK'
 
 files = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
 
@@ -55,9 +52,10 @@ data_batch = []
 for i in range(0, len(data)-batch_size, batch_size):
     data_batch.append(torch.cat([data[k] for k in range(i,i+batch_size)]))
 
-unet = modeling.UnetGenerator(in_dim, out_dim, n_filter).to(device)
+unet = modeling.UnetGenerator().to(device)
+print(unet)
 
-loss_fn = nn.MSELoss()
+loss = nn.MSELoss()
 optimizer = torch.optim.SGD(unet.parameters(), lr=lr, momentum=0.99)
 
 for i in range(n_epoch):
@@ -65,7 +63,7 @@ for i in range(n_epoch):
         x = data_batch[j]
         optimizer.zero_grad()
         output = unet.forward(x)
-        loss = loss_fn(output,x)
+        loss = loss(output,x)
         loss.backward()
 
         optimizer.step()
