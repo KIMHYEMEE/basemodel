@@ -47,13 +47,13 @@ class UnetGenerator(nn.Module):
 
     def forward(self, input):
         down1 = self.down1(input)
-        pool1 = self.poo11(down1)
+        pool1 = self.pool1(down1)
         down2 = self.down2(pool1)
-        pool2 = self.poo12(down2)
+        pool2 = self.pool2(down2)
         down3 = self.down2(pool2)
-        pool3 = self.poo12(down3)
+        pool3 = self.pool2(down3)
         down4 = self.down2(pool3)
-        pool4 = self.poo12(down4)
+        pool4 = self.pool2(down4)
         
         bridge = self.bridge(pool4)
         

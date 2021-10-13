@@ -4,7 +4,7 @@ Created on Mon Sep 27 17:58:11 2021
 
 @author: USER
 
-Ref.1: https://github.com/milesial/Pytorch-UNet/blob/master/une
+Ref.1: https://github.com/milesial/Pytorch-UNet/blob/master/unet
 Ref.2: https://wjddyd66.github.io/pytorch/Pytorch-Unet/
 """
 
@@ -31,8 +31,10 @@ data_dir = 'C:/BaseData/Project/5. DBR/202109_data/original/OK'
 files = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
 
 loader = transforms.Compose([
+    transforms.Resize(img_size),
     transforms.ToTensor()
     ])
+
 
 def img_loader(img_name):
     img = Image.open(img_name)
@@ -51,7 +53,12 @@ data_batch = []
 
 for i in range(0, len(data)-batch_size, batch_size):
     data_batch.append(torch.cat([data[k] for k in range(i,i+batch_size)]))
-
+"""
+import numpy as np
+print(img.size())
+print(np.shape(data))
+print(np.shape(data_batch))
+"""
 unet = modeling.UnetGenerator().to(device)
 print(unet)
 
